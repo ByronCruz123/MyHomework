@@ -1,0 +1,62 @@
+/*BUSCADOR*/
+/*OCULTAR INPUT CHECKBOX, O TOGGLE EL CUAL HARA LA FUNCION DE CLICK JUNTO CON EL LABEL*/
+
+.svg-icon {
+    color: #575e66;
+    height: 1.2em;
+    width: 1.2em;
+    font-weight: 400;
+    fill: currentcolor;
+}
+
+
+
+.toggle-btn{
+    position: absolute;
+    display: none;
+}
+
+#search-tag {
+    background: #fff;
+    width: 100%;
+    font-family: "Open Sans", sans-serif;
+    font-style: normal;
+    font-weight: 100;
+    line-height: 21px;
+    font-size: 0.8125rem;
+    color: #575e66;
+    border-radius: .25rem;
+    padding: .25rem 1rem;
+    border: none;
+    outline: none;
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transition: transform .25s;
+    transform: translateX(0%);
+    transform: translateY(-150%);
+}
+#search-tag::placeholder{
+    color: #828282;
+}
+
+
+@media screen and (min-width: 750px){
+    #search-tag {
+        height: auto;
+        top: 10px;
+        bottom: 10px;
+        left: auto;
+        right: 0.9em;
+        width: 400px;
+        border: 1px solid #ececec;
+        padding: 0.4em 1em;
+        transition: transform .25s;
+        transform: translateX(110%);
+    }
+}
+
+#search-tag:focus{
+    transform: translateX(0%);
+}
