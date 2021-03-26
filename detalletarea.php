@@ -30,7 +30,7 @@ if (!isset($_SESSION['user'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instrucciones</title>
-    <link rel="icon" href="Resources/img/homework.png">
+    <link rel="icon" href="Resources/img/homework.svg">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="Resources/css/bootstrap.css">
@@ -112,14 +112,6 @@ if (!isset($_SESSION['user'])) {
                                     </a>
                                 </li>
                             <?php } ?>
-                            <li class="nav-item">
-                                <a class="nav-link btn-blanco-desing" href="solicitudes.php">
-                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-plus-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm7.5-3a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
-                                    </svg>
-                                    Solicitudes
-                                </a>
-                            </li>
                             <li class="nav-item">
 
                                 <a class="nav-link btn-blanco-desing" href="notificaciones.php">
@@ -255,11 +247,57 @@ if (!isset($_SESSION['user'])) {
                         <?php
                         if ($permiso == 1) { ?>
                             <div class="d-flex justify-content-end mt-2 text-danger ">
-                                <button type="button" data-tarea="<?php echo isset($idtarea) ? $idtarea : ""; ?>" class="btn btn-danger btn-sm eliminartarea">Eliminar tarea</button>
+                                <button type="button" data-tarea="<?php echo isset($idtarea) ? $idtarea : ""; ?>" class="btn btn-danger btn-sm eliminartarea">
+                                    Eliminar tarea
+                                </button>
 
                             </div>
+                        <?php }
+                        if ($permiso == 2) { ?>
+                            <div class="d-flex justify-content-end mt-2 text-danger ">
+                                <button class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#entregar_trabajo_modal">
+                                    Entregar trabajo
+                                </button>
+                            </div>
+
+                            <div class="modal" tabindex="-1" id="entregar_trabajo_modal">
+                                <div class="modal-dialog">
+                                    <div class="modal-content entregar_trabajo_modal">
+                                        
+
+                                        <form id="formuploadajax" enctype="multipart/form-data">
+                                            <div class="modal-body">
+                                                <div class="form-group mt-3 p-2">
+                                                    <input type="file" class="form-control-file" name="file">
+                                                    <input type="hidden" value="<?php echo $idtarea; ?>" name="id_tarea">
+                                                    <?php
+                                                    $idalumnosql = mysqli_query($con,   "SELECT * FROM alumnosdeclase WHERE id_usuario = '$idusuario' and id_clase = '$idclase' and acceso = 1");
+                                                    if (mysqli_num_rows($idalumnosql) > 0) {
+                                                        $idalumno = mysqli_fetch_assoc($idalumnosql)['id_alumno'];
+                                                    }
+                                                    ?>
+                                                    <input type="hidden" value="<?php echo $idalumno; ?>" name="id_alumno">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control mt-4" rows="3" name="comentario" placeholder="Descripción o comentario"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex align-items-center justify-content-end">
+                                                <button type="button" class="btn btn-secondary m-1 mb-3" data-dismiss="modal">Cancelar</button>
+                                                <button type="submit" class="btn btn-primary m-1 mb-3 mr-3">Entregar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         <?php } ?>
+
+
+
+
                     </div>
+
+
 
         <?php
                 } else {
@@ -279,7 +317,7 @@ if (!isset($_SESSION['user'])) {
     <!-- SIDEBAR -->
     <aside class="sidebar" id="navbar">
         <header>
-            Profesores
+            MyHomework
         </header>
         <nav class="sidebar-nav">
             <ul>
@@ -293,9 +331,6 @@ if (!isset($_SESSION['user'])) {
                         <a href="alumnos.php?clase=<?php echo $idclase ?>"><i class="ion-android-people"></i> <span>Alumnos</span></a>
                     </li>
                 <?php } ?>
-                <li>
-                    <a href="solicitudes.php"><i class="ion-android-person-add"></i> <span>Solicitudes</span></a>
-                </li>
                 <li>
                     <a href="notificaciones.php"><i class="ion-ios-bell-outline"></i> <span class="">Notificaciones</span></a>
                 </li>

@@ -7,6 +7,7 @@
     <link rel="icon" href="Resources/img/homework.svg">
     <script src="https://kit.fontawesome.com/64d58efce2.js"  crossorigin="anonymous"></script>
     <link rel="stylesheet" href="Resources/css/login.css" />
+    <link rel="stylesheet" href="Resources/css/alertify.css">
     <title>MyHomework - Entrar o Registrarse</title>
   </head>
   <body>
@@ -15,36 +16,37 @@
         
         <div class="signin-signup">
 
-          <form action="#" class="sign-in-form">
+          <form class="sign-in-form" onsubmit="funcionSubmit(event)">
             <h2 class="title">Iniciar Sesion</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" placeholder="Usuario" />
+              <input type="text" placeholder="Usuario" name="user" spellcheck="false" autocomplete="on"/>
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input type="password" placeholder="Contraseña" />
+              <input type="password" placeholder="Contraseña" name="password" />
+              <input type="hidden" name="action" value="sign-in">
             </div>
-            <input type="submit" value="Entrar" id="login-button" class="btn solid"/>
+            <button type="submit" id="login-button" class="btn solid">Entrar</button>
           </form>
 
 
-          <form action="#" class="sign-up-form">
+          <form action="#" class="sign-up-form" onsubmit="funcionSubmit(event)">
             <h2 class="title">Regístrate</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" placeholder="Usuario" />
+              <input type="text" placeholder="Nombre" name="name"/>
             </div>
             <div class="input-field">
               <i class="fas fa-envelope"></i>
-              <input type="email" placeholder="Correo" />
+              <input type="text" placeholder="Usuario" name="user" />
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input type="password" placeholder="Contraseña" />
+              <input type="password" placeholder="Contraseña" name="password" />
+              <input type="hidden" name="action" value="sign-up">
             </div>
-
-            <input type="submit" class="btn" value="Crear cuenta" />
+            <button type="submit" class="btn">Crear cuenta</button>
           </form>
         </div>
       </div>
@@ -85,7 +87,8 @@
 
       </div>
     </div>
-
+    <script src="resources/js/jquery.js"></script>
+    <script src="resources/js/alertify.js"></script>
     <script src="Resources/js/login.js"></script>
   </body>
 </html>

@@ -31,7 +31,7 @@ if (!isset($_SESSION['user'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tareas</title>
-    <link rel="icon" href="Resources/img/homework.png">
+    <link rel="icon" href="Resources/img/homework.svg">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="Resources/css/bootstrap.css">
     <link rel="stylesheet" href="Resources/css/buscador.css">
@@ -101,14 +101,6 @@ if (!isset($_SESSION['user'])) {
                                 </a>
                             </li>
                         <?php } ?>
-                        <li class="nav-item">
-                            <a class="nav-link btn-blanco-desing" href="solicitudes.php">
-                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-plus-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm7.5-3a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
-                                </svg>
-                                Solicitudes
-                            </a>
-                        </li>
                         <li class="nav-item">
 
                             <a class="nav-link btn-blanco-desing" href="notificaciones.php">
@@ -226,7 +218,7 @@ if (!isset($_SESSION['user'])) {
     <!-- SIDEBAR -->
     <aside class="sidebar" id="navbar">
         <header>
-            Profesores
+            MyHomework
         </header>
         <nav class="sidebar-nav">
             <ul>
@@ -239,9 +231,6 @@ if (!isset($_SESSION['user'])) {
                         <a href="alumnos.php?clase=<?php echo $idclase ?>"><i class="ion-android-people"></i> <span>Alumnos</span></a>
                     </li>
                 <?php } ?>
-                <li>
-                    <a href="solicitudes.php"><i class="ion-android-person-add"></i> <span>Solicitudes</span></a>
-                </li>
                 <li>
                     <a href="notificaciones.php"><i class="ion-ios-bell-outline"></i> <span class="">Notificaciones</span></a>
                 </li>

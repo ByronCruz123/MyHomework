@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
 
                                         /*ESTILOS GENERALES*/
 body {
@@ -82,6 +84,31 @@ a.titulo{
       margin-bottom: 0;
   }
 }
+
+.nada_aqui{
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  justify-content: center;
+}
+.nada_aqui .content{
+  width: 100%;
+  max-width: 600px;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.nada_aqui img{
+  width: 100%;
+  margin: 0.5rem 0rem 2rem;
+}
+
+.nada_aqui .text {
+  text-align: center;
+  font-size: 1.5em;
+  color: rgb(95, 95, 95);
+  margin-bottom: 10px;
+}
+
 /*Fin unicamente en inicio.php*/
 
 
@@ -109,6 +136,18 @@ a.titulo{
                             /*ESTILOS VARIOS, BOTONES, CAJAS, LETRAS*/
 
 /*Boton personalizado llamado btn-blanco-desing*/
+
+.btn-primary {
+  background-color: #00B0FF;
+  border-color: #00B0FF;
+}
+
+.btn-secondary {
+  background-color: #9b9b9b;
+  border-color: #9b9b9b;
+}
+
+
 
 .btn_new_class {
   -webkit-appearance: none;

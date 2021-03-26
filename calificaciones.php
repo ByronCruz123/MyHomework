@@ -12,7 +12,7 @@ if (!isset($_SESSION['user'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calificaciones</title>
-    <link rel="icon" href="Resources/img/homework.png">
+    <link rel="icon" href="Resources/img/homework.svg">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="Resources/css/bootstrap.css">
@@ -92,15 +92,6 @@ if (!isset($_SESSION['user'])) {
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn-blanco-desing" href="solicitudes.php">
-                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-plus-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm7.5-3a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
-                                </svg>
-                                Solicitudes
-                            </a>
-                        </li>
-                        <li class="nav-item">
-
                             <a class="nav-link btn-blanco-desing" href="notificaciones.php">
                                 <svg width="0.7em" height="1em" viewBox="0 0 16 16" class="bi bi-bell-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z" />
@@ -136,8 +127,8 @@ if (!isset($_SESSION['user'])) {
                     </ul>
                     <div class="vacio pl-lg-3 pr-lg-4"></div>
                     <button class="navbar-toggler btn-menu" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
     </nav>
 
     <main class="container tareas">
@@ -167,11 +158,13 @@ if (!isset($_SESSION['user'])) {
         </span>
 
         <div class="tarea mt-1">
-            <table class="table table-bordered">
+            <table class="table table-bordered tabla_trabajosynotas">
+            <input type="hidden" value="<?php echo $idtarea;?>" id="idtarea">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Alumno</th>
+                        <th scope="col" style="width: 9em;">Trabajo</th>
                         <th scope="col" style="width: 6em;">Puntos</th>
                     </tr>
                 </thead>
@@ -183,20 +176,35 @@ if (!isset($_SESSION['user'])) {
                                                 WHERE ac.id_clase = $idclase");
                     $contador = 1;
 
-                    while ($alumno = mysqli_fetch_array($sql2)) {   $idalumno = $alumno['id']; ?>
-                        <tr id="fila" data-id="<?php echo $idalumno;?>">
+                    while ($alumno = mysqli_fetch_array($sql2)) {
+                        $idalumno = $alumno['id']; ?>
+                        <tr id="fila" data-id="<?php echo $idalumno; ?>">
                             <th scope="row"><?php echo $contador++; ?></th>
                             <td class="text-capitalize"><?php echo $alumno['nombre'] . " " . $alumno['apellido'] ?></td>
+                            <th>
+                                <?php
+                                $trabajo_de_alumno = mysqli_query($con, "SELECT * FROM trabajos WHERE id_alumno = '$idalumno' and id_tarea = '$idtarea'");
+
+                                if (mysqli_num_rows($trabajo_de_alumno) > 0) { ?>
+                                    <button class="btn btn-info btn-small ver_trabajos_btn" data-toggle="modal" data-target="#vertrabajos">
+                                        Ver <i class="fas fa-eye"></i>
+                                    </button>
+                                <?php
+                                } else {
+                                ?> <p class="text-danger font-weight-normal">No entregado</p> <?php
+                                }
+                                ?>
+                            </th>
                             <td>
                                 <div class="form-group">
-                                    <?php 
-                                        $sqlnota = mysqli_query($con, "SELECT puntos FROM notas Where id_alumno = $idalumno and id_tarea = $idtarea");
-                                        $puntos = '';
-                                        if(mysqli_num_rows($sqlnota) > 0 ){     
-                                            $puntos = mysqli_fetch_assoc($sqlnota)['puntos'];
-                                        }
+                                    <?php
+                                    $sqlnota = mysqli_query($con, "SELECT puntos FROM notas Where id_alumno = $idalumno and id_tarea = $idtarea");
+                                    $puntos = '';
+                                    if (mysqli_num_rows($sqlnota) > 0) {
+                                        $puntos = mysqli_fetch_assoc($sqlnota)['puntos'];
+                                    }
                                     ?>
-                                    <input  type="number" data-puntaje_actual="<?php echo $puntos;?>" max="<?php echo $datostarea['puntos']; ?>" value="<?php echo $puntos; ?>"  class="form-control input_puntos">
+                                    <input type="number" data-puntaje_actual="<?php echo $puntos; ?>" max="<?php echo $datostarea['puntos']; ?>" value="<?php echo $puntos; ?>" class="form-control input_puntos">
                                 </div>
                             </td>
                         </tr>
@@ -213,19 +221,17 @@ if (!isset($_SESSION['user'])) {
     <!-- SIDEBAR -->
     <aside class="sidebar" id="navbar">
         <header>
-            Profesores
+            MyHomework
         </header>
         <nav class="sidebar-nav">
             <ul>
                 <li>
                     <a href="inicio.php"><i class="ion-ios-home-outline"></i> <span>Clases</span></a>
                 </li>
-                 <li>
+                <li>
                     <a href="alumnos.php?clase=<?php echo $idclase ?>"><i class="ion-android-people"></i> <span>Alumnos</span></a>
                 </li>
-                <li>
-                    <a href="solicitudes.php"><i class="ion-android-person-add"></i> <span>Solicitudes</span></a>
-                </li>
+
                 <li>
                     <a href="notificaciones.php"><i class="ion-ios-bell-outline"></i> <span class="">Notificaciones</span></a>
                 </li>
@@ -249,6 +255,26 @@ if (!isset($_SESSION['user'])) {
             </ul>
         </nav>
     </aside>
+
+    <!-- MODALS -->
+    <div class="modal" tabindex="-1" id="vertrabajos">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <table class="table table-borderless">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Descripcion</th>
+                            <th scope="col">Descargar</th>
+                        </tr>
+                    </thead>
+                    <tbody class="lista_de_trabajos_entregados">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </body>
 <script src="resources/js/jquery.js"></script>
 <script src="resources/js/popper.min.js"></script>

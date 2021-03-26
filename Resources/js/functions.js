@@ -37,9 +37,6 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    /**
-     * Metodo de verificacion de usario, (login)
-     */
     $("#signup-button").click(function () {
         var boton = $(this);
 
@@ -75,12 +72,23 @@ $(".btn-menu").on("click", function () {
 /**
  * Unicamente cargara la lista de clases 
  */
+const lost_svg = `<div class="container nada_aqui">
+                    <div class="content">
+                        <img src="resources/img/lost.svg" class="" alt="">
+                        <h2 class="text">Parece que no  hay nada por aquí</h2>
+                    </div>
+                    </div>`;
+
 function cargarclases() {
     $.ajax({
         type: "GET",
         url: "Includes/clases_list.php",
         success: function (res) {
-            $(".clases_list").html(res).fadeIn();
+            if (res == "") {
+                $(".clases_list").html(lost_svg).fadeIn();
+            } else {
+                $(".clases_list").html(res).fadeIn();
+            }
         }
     });
 }
@@ -134,7 +142,8 @@ function managgement_class(id, form, accion) {
         success: function (res) {
             //posibles respuestas del servidor 
             if (res == "creado") {
-                alertify.notify('Nueva clase agregada', 'success', 5);
+                alertify.notify('Nueva clase agregada', 'custom', 5);
+                //alertify.notify('Nueva clase agregada', 'info', 5);
                 $('#formclasemodal').modal('hide');
                 setTimeout(
                     function () {
@@ -480,8 +489,8 @@ $(".listaalumnosencontrados").on("click", "li", function () {
     var nombre = esto.find(".nombrealumno").text().trim();
     var username = esto.find(".badge").text().trim();
 
-    if ($('.seleccionados').find('*[data-id="'+id+'"]').length == 0) {//asegurarse que el producto no este seleccionado, para evitar agregar el proucto mas de una vez
-        
+    if ($('.seleccionados').find('*[data-id="' + id + '"]').length == 0) {//asegurarse que el producto no este seleccionado, para evitar agregar el proucto mas de una vez
+
         //creacion de elementos mas optimizada, segun mis investigaciones y stackoverflow :V, que sea cierto no se, pero queria utilizarla 
         $("<li>", {
             'class': 'list-group-item',
@@ -505,7 +514,7 @@ $(".listaalumnosencontrados").on("click", "li", function () {
         ).appendTo(seleccionados);
 
         alumnosseleccionados();
-    } 
+    }
 });
 
 
@@ -517,13 +526,13 @@ $(".listaalumnosencontrados").on("click", "li", function () {
 
 $('#agregaralumnos').click(function () {
     let seleccionados = $(this).parent().parent().find(".seleccionados");
-    seleccionados.find("li").each(function() {
+    seleccionados.find("li").each(function () {
         var alumno = $(this).attr("data-id");
         var clase = $(".idclase").val();
 
         managgement_alumnos('', alumno, '', clase, "agregar");
 
-        $(this).remove();  
+        $(this).remove();
     })
 
     setTimeout(
@@ -626,3 +635,62 @@ $("#guardarnotas").click(function () {
 
 });
 
+
+
+$("#formuploadajax").on("submit", function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(document.getElementById("formuploadajax"));
+
+    formData.append("accion", "agregar");
+
+    console.log(formData);
+
+    $.ajax({
+        url: "Controllers/Homeworks.php",
+        type: "post",
+        dataType: "html",
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false
+    }).done(function (res) {
+        console.log(res)
+    });
+});
+
+
+
+$('.tabla_trabajosynotas').on("click", ".ver_trabajos_btn", function(){
+    var idalumno = $(this).parents("#fila").attr("data-id");
+    var idtarea = $("#idtarea").val()
+    
+
+    var print = $(".lista_de_trabajos_entregados");
+
+    $.ajax({
+        url: "Controllers/Homeworks.php",
+        type: "post",
+        dataType: "html",
+        data: {idalumno : idalumno, idtarea : idtarea, accion : "obtener"},
+    }).done(function (res) {
+        print.html(res)
+    });
+})
+
+$('.tabla_trabajosynotas').on("click", ".ver_trabajos_btn", function(){
+    var idalumno = $(this).parents("#fila").attr("data-id");
+    var idtarea = $("#idtarea").val()
+    
+
+    var print = $(".lista_de_trabajos_entregados");
+
+    $.ajax({
+        url: "Controllers/Homeworks.php",
+        type: "post",
+        dataType: "html",
+        data: {idalumno : idalumno, idtarea : idtarea, accion : "obtener"},
+    }).done(function (res) {
+        print.html(res)
+    });
+})

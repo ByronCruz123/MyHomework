@@ -1,7 +1,7 @@
 <?php
 $server = "localhost";
 $user = "root";
-$database = "profesores";
+$database = "myhomework_db";
 $pass = "";
 
 $con = mysqli_connect($server, $user, $pass, $database);

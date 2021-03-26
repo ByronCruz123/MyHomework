@@ -3,15 +3,15 @@ session_start();
 if (!empty($_POST)) {
     //validar si los campos no estan vacios
 
-    if ($_POST['action'] == 'login') {
-        if (empty($_POST['user']) || empty($_POST['pass'])) {
+    if ($_POST['action'] == 'sign-in') {
+        if (empty($_POST['user']) || empty($_POST['password'])) {
             echo "faltan_datos";
         } else {
             require_once "../Model/conexion.php";
             //uso de la funcion mysqli_real_escape_string para filtrar caracteres extraños obtenidos mediante POST
 
             $user = mysqli_real_escape_string($con, $_POST['user']);
-            $pass = md5(mysqli_real_escape_string($con, $_POST['pass']));
+            $pass = md5(mysqli_real_escape_string($con, $_POST['password']));
 
 
             /*se verifica si el usuario y contraseña
@@ -36,18 +36,17 @@ if (!empty($_POST)) {
                 echo "datos_incorrectos";
             }
         }
-    } elseif ($_REQUEST['action'] == 'signup') {
+    } elseif ($_REQUEST['action'] == 'sign-up') {
 
-        if (empty($_POST['nombre']) || empty($_POST['user']) || empty($_POST['pass'])) {
+        if (empty($_POST['name']) || empty($_POST['user']) || empty($_POST['password'])) {
             echo "faltan_datos";
         } else {
             require_once "../Model/conexion.php";
             //uso de la funcion mysqli_real_escape_string para filtrar caracteres extraños obtenidos mediante POST
 
-            $nombre = mysqli_real_escape_string($con, $_POST['nombre']);
-            $apellido = mysqli_real_escape_string($con, $_POST['apellido']);
+            $nombre = mysqli_real_escape_string($con, $_POST['name']);
             $user = mysqli_real_escape_string($con, $_POST['user']);
-            $pass = md5(mysqli_real_escape_string($con, $_POST['pass']));
+            $pass = md5(mysqli_real_escape_string($con, $_POST['password']));
 
 
             /*se verifica que el usuario 
@@ -57,7 +56,7 @@ if (!empty($_POST)) {
             $result = mysqli_num_rows($query);
             //se recorren los datos del usuario que se esta logueando
             if ($result > 0) {
-                echo "ya_existe";
+                echo "nodisponible";
                 mysqli_close($con);
             } else {
                 $query_insert = mysqli_query($con,   "INSERT INTO usuario(nombre,apellido,user,pass)
