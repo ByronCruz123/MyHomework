@@ -247,8 +247,13 @@ if (!isset($_SESSION['user'])) {
                         <?php
                         if ($permiso == 1) { ?>
                             <div class="d-flex justify-content-end mt-2 text-danger ">
-                                <button type="button" data-tarea="<?php echo isset($idtarea) ? $idtarea : ""; ?>" class="btn btn-danger btn-sm eliminartarea">
-                                    Eliminar tarea
+                                <button type="button" data-tarea="<?php echo isset($idtarea) ? $idtarea : ""; ?>" class="btn btn-warning btn-sm eliminartarea">
+                                    ELIMINAR
+                                </button>
+
+                                <button type="button"
+                                         class="btn btn-light btn-sm  ml-1" data-toggle="modal" data-target="#vistoporlista">
+                                    VISTO POR <i class="fas fa-eye"></i>
                                 </button>
 
                             </div>
@@ -263,7 +268,7 @@ if (!isset($_SESSION['user'])) {
                             <div class="modal" tabindex="-1" id="entregar_trabajo_modal">
                                 <div class="modal-dialog">
                                     <div class="modal-content entregar_trabajo_modal">
-                                        
+
 
                                         <form id="formuploadajax" enctype="multipart/form-data">
                                             <div class="modal-body">
@@ -354,6 +359,26 @@ if (!isset($_SESSION['user'])) {
             </ul>
         </nav>
     </aside>
+
+    <!-- MODALS -->
+    <div class="modal" tabindex="-1" id="vistoporlista">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <table class="table table-borderless">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Descripcion</th>
+                            <th scope="col">Descargar</th>
+                        </tr>
+                    </thead>
+                    <tbody class="lista_de_trabajos_entregados">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
 </body>
 <script src="resources/js/jquery.js"></script>
